@@ -5,7 +5,7 @@ This repository contains the source code for interpreting the intermediate layer
   src="framework/CoCa.png"  
   alt="Alt text"
   title="Original CoCa architecture"
-  style="display: inline-block; margin: 0 auto; max-width: 150px">
+  style="display: inline-block; margin: 0 auto; max-width: 50px">
 
 <img
   src="framework/LatentCaptioning.png"
@@ -43,9 +43,9 @@ This repository contains the source code for interpreting the intermediate layer
 
 To get started with this repository, follow these steps:
 
-1. **Clone the Repository:** ???
+1. **Clone the Repository:** 
     ```bash
-    git clone https://github.com/your-username/your-repo-name.git
+    git clone https://github.com/SogolHaghighat/latent_verbalizer.git
     ```
 
 2. **Install Dependencies:**\
