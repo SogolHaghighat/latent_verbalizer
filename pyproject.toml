@@ -1,0 +1,43 @@
+[build-system]
+requires = ["poetry-core>=1.2.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "latent_verbalizer"
+version = "0.1.0"
+authors = ["Sogol Haghighat <sogol.haghighat@iais.fraunhofer.de>"]
+description = "A package for interpreting intermediate layers of the vision encoder within CoCa model."
+readme = "README.md"
+packages = [{ include = "latent_verbalizer", from = "." }]
+requires-python = ">=3.10"
+
+[tool.poetry.dependencies]
+transformers="4.41.2"
+webdataset="0.2.96"
+open-clip-torch="2.24.0"
+h5py="3.11.0"
+sentence-transformers="3.0.1"
+scikit-learn="1.5.1"
+pandas="2.2.3"
+seaborn="0.13.2"
+pydantic="^2.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+jupyter = "^1.0.0"
+ruff = "^0.0.287"
+pre-commit = "^3.4.0"
+
+[tool.poetry.group.dev.dependencies]
+nox = "^2023.4.22"
+pytest = "^7.4.0"
+
+[tool.ruff]
+line-length = 100
+ignore-init-module-imports = true
+select = ["F", "E", "I"]
+
+
+
+
+

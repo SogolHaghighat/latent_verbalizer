@@ -1,0 +1,19 @@
+seq_len : 30
+max_seq_len: 77
+temperature: 1.0
+generation_type: "top_k"
+top_k: 1
+top_p: 0.9
+repetition_penalty: 1.0
+model_name: "coca_ViT-L-14"
+pretrained: "mscoco_finetuned_laion2B-s13B-b90k"
+keep_probs: True
+pad_token_id: 0
+eos_token_id: 49407
+sot_token_id: 49406
+min_seq_len: 5 
+fixed_output_length: False 
+input_path_template: "data/interpret/layers_features_coca_ViT-L-14_mscoco_finetuned_laion2B-s13B-b90k_batch0.h5"
+output_caps_path_template: "data/interpret/caps_batch0.json"
+output_entropy_path_template: "data/interpret/entropy_batch0.json"
+  
