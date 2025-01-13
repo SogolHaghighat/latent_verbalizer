@@ -35,7 +35,6 @@ def process_batch(
     with h5py.File(input_path, "r") as feat:
         caps = dict()
         entropy_dict = dict()
-        names = feat.get("names", [])[:]
         for layer_no in range(24):  # FIXME: this model has 24 layers!
             layer_key = f"transformer.resblocks.{layer_no}"
             if layer_key not in feat:
@@ -145,6 +144,6 @@ if __name__ == "__main__":
     try:
         config = InterpretCfg.from_yaml(args.config)
         main(config)
-    except Exception as e:
+    except Exception:
         logger.exception("An error occurred during processing.")
         exit(1)

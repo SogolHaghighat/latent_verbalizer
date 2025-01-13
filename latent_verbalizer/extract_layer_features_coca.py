@@ -114,7 +114,7 @@ if __name__ == "__main__":
     layers = []
 
     # This decoposition is only for the open-coca implementation from : https://github.com/mlfoundations/open_clip/blob/main/src/open_clip/coca_model.py
-    for i in range(args.num_layers):  
+    for i in range(args.num_layers):
         layers.append(
             f"transformer.resblocks.{i}"
         )  # output of each transformer layer into the residual stream
@@ -143,7 +143,7 @@ if __name__ == "__main__":
             test_data = os.path.join(
                 args.output,
                 f"layers_features_{args.model}_{args.pretrained}_batch{i}.h5",
-            )  
+            )
             features = {}
             inputs, _, names = data[0].to(device), data[1], data[2]
             _ = visual(inputs)

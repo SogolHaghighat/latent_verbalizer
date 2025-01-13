@@ -1,8 +1,9 @@
-import json
-import transformers
-import torch
-import os
 import argparse
+import json
+import os
+
+import torch
+import transformers
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -138,7 +139,7 @@ if __name__ == "__main__":
                 f"classification_llama_70B_top3_labels_{layer}_{batch_name}.json",
             ),
             "w",
-        ) as ff:  
+        ) as ff:
             json.dump(curr_layer, ff)
         print(
             f"***************layer {layer} finished!*********************************"

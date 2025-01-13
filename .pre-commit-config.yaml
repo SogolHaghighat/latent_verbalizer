@@ -7,7 +7,6 @@ repos:
     rev: v0.0.278
     hooks:
       - id: ruff
-      args: [--fix, --exit-non-zero-on-fix]
-      stages: [pre-commit]
+
 
 

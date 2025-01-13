@@ -25,7 +25,7 @@ try:
 
     GENERATION_TYPES = {"top_k": TopKLogitsWarper, "top_p": TopPLogitsWarper}
     _has_transformers = True
-except ImportError as e:
+except ImportError:
     GENERATION_TYPES = {"top_k": None, "top_p": None}
     _has_transformers = False
 
@@ -40,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 class InterpretCfg(BaseModel):
     seq_len: int = Field(default=30, description="The generated sequence length")
-    max_seq_len: int = Field(default=77, description="maximum length of the generated sequence")
+    max_seq_len: int = Field(
+        default=77, description="maximum length of the generated sequence"
+    )
     temperature: float = Field(default=1.0, description="")
     generation_type: str = Field(
         default="top_k",
@@ -52,7 +54,7 @@ class InterpretCfg(BaseModel):
     )
     top_p: float = Field(
         default=0.9,
-        description="samples from top p% when generating the next token", #FIXME: definition
+        description="samples from top p% when generating the next token",  # FIXME: definition
     )
     repetition_penalty: float = Field(
         default=1.0, description="repetition penalty for generating the next token"
@@ -67,12 +69,18 @@ class InterpretCfg(BaseModel):
     )
     keep_probs: bool = Field(
         default=True,
-        description="when true the probabilities when generating each token is also returned by the interpret function",  
+        description="when true the probabilities when generating each token is also returned by the interpret function",
     )
     pad_token_id: Optional[int] = Field(default=0, description="padding token id")
-    eos_token_id: Optional[int] = Field(default=49407, description="end of sentence token id")
-    sot_token_id: Optional[int] = Field(default=49406, description="start of text token id")
-    min_seq_len: int = Field(default=5, description="minimum length for the generated sequence")
+    eos_token_id: Optional[int] = Field(
+        default=49407, description="end of sentence token id"
+    )
+    sot_token_id: Optional[int] = Field(
+        default=49406, description="start of text token id"
+    )
+    min_seq_len: int = Field(
+        default=5, description="minimum length for the generated sequence"
+    )
     fixed_output_length: bool = Field(
         default=False, description="if True, output.shape == (batch_size, seq_len)"
     )
@@ -161,10 +169,12 @@ def interpret(
     assert vocab is not None, "Vocabulary must be provided."
     assert text_decoder is not None, "Text decoder function must be provided."
 
-    assert _has_transformers, (
-        "Please install transformers for generate functionality. `pip install transformers`."
-    )
-    assert config.seq_len > config.min_seq_len, "seq_len must be larger than min_seq_len"
+    assert (
+        _has_transformers
+    ), "Please install transformers for generate functionality. `pip install transformers`."
+    assert (
+        config.seq_len > config.min_seq_len
+    ), "seq_len must be larger than min_seq_len"
 
     # Initialize tokens and parameters
     sot_token_id = config.sot_token_id or 49406
@@ -190,7 +200,9 @@ def interpret(
     elif config.generation_type == "top_k":
         logit_warper = GENERATION_TYPES[config.generation_type](config.top_k, min_tokens_to_keep=1)  # type: ignore
     else:
-        raise ValueError(f"generation_type must be one of {', '.join(GENERATION_TYPES.keys())}")
+        raise ValueError(
+            f"generation_type must be one of {', '.join(GENERATION_TYPES.keys())}"
+        )
 
     # Encode image or features
     if image is not None:
@@ -202,7 +214,9 @@ def interpret(
         device = features.device
         batch = features.size(0)
     else:
-        raise ValueError("Either image or features must be provided for interpretation.")
+        raise ValueError(
+            "Either image or features must be provided for interpretation."
+        )
 
     # Initialize text input
     if text is None:
@@ -221,10 +235,15 @@ def interpret(
             x = out[:, -config.max_seq_len :]
             cur_len = x.size(1)
             _, token_embs = text_encoder(x)
-            logits = multimodal_decoder(image_embs=img_embs, text_embs=token_embs)[:, -1]
+            logits = multimodal_decoder(image_embs=img_embs, text_embs=token_embs)[
+                :, -1
+            ]
 
             mask = (out[:, -1] == eos_token_id) | (out[:, -1] == pad_token_id)
-            sample = torch.ones((out.shape[0], 1), device=device, dtype=torch.long) * pad_token_id
+            sample = (
+                torch.ones((out.shape[0], 1), device=device, dtype=torch.long)
+                * pad_token_id
+            )
 
             if mask.all():
                 if not config.fixed_output_length:
@@ -251,7 +270,10 @@ def interpret(
             cur_len += 1
 
             is_done = False
-            if EosTokenCriteria in stopping_criteria or StopStringCriteria in stopping_criteria:
+            if (
+                EosTokenCriteria in stopping_criteria
+                or StopStringCriteria in stopping_criteria
+            ):
                 is_done = stopping_criteria(out, None).all()  # type: ignore
             else:
                 is_done = stopping_criteria(out, None).any()  # type: ignore
@@ -263,7 +285,9 @@ def interpret(
     return out, cur_len, data if config.keep_probs else None
 
 
-def give_caption(token_ids: torch.Tensor, text_decoder: Callable[[torch.Tensor], str]) -> str:
+def give_caption(
+    token_ids: torch.Tensor, text_decoder: Callable[[torch.Tensor], str]
+) -> str:
     """
     Convert token IDs to a human-readable caption.
 
@@ -275,7 +299,9 @@ def give_caption(token_ids: torch.Tensor, text_decoder: Callable[[torch.Tensor],
         str: Generated caption.
     """
     decoded_text = text_decoder(token_ids)
-    caption = decoded_text.split("<end_of_text>")[0].replace("<start_of_text>", "").strip()
+    caption = (
+        decoded_text.split("<end_of_text>")[0].replace("<start_of_text>", "").strip()
+    )
     return caption
 
 

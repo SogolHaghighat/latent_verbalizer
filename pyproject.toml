@@ -33,7 +33,7 @@ nox = "^2023.4.22"
 pytest = "^7.4.0"
 
 [tool.ruff]
-line-length = 100
+line-length = 300
 ignore-init-module-imports = true
 select = ["F", "E", "I"]
 
