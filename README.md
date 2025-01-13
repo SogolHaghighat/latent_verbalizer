@@ -1,19 +1,9 @@
 # Visual Latent Captioning - Towards Verbalizing Vision Transformer Encoders
 This repository contains the source code for interpreting the intermediate layers of the **vision encoder** component of the [CoCa model](https://arxiv.org/abs/2205.01917). The interpretation leverages the open-source implementation of CoCa by [mlfoundations](https://github.com/mlfoundations/open_clip).
 
-<img
-  src="framework/CoCa.png"  
-  alt="Alt text"
-  title="Original CoCa architecture"
-  style="display: inline-block; margin: 0 auto; max-width: 50px">
-
-<img
-  src="framework/LatentCaptioning.png"
-  alt="Alt text"
-  title="Visual latent captioning framework"
-  style="display: inline-block; margin: 0 auto; max-width: 300px">
-
-
+Original CoCa Architecture | Visual latent captioning framework
+:-------------------------:|:-------------------------:
+![](framework/CoCa.png)  |  ![](framework/LatentCaptioning.png)
 ## Overview
 
 - **Objective:**  
