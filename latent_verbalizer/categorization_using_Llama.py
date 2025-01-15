@@ -136,7 +136,7 @@ if __name__ == "__main__":
         with open(
             os.path.join(
                 args.output,
-                f"classification_llama_70B_top3_labels_{layer}_{batch_name}.json",
+                f"classification_llama_70B_top3_labels_{layer}_{batch_name}",
             ),
             "w",
         ) as ff:
