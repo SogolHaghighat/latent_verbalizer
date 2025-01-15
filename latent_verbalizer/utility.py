@@ -349,7 +349,7 @@ def load_model(config: InterpretCfg, device: torch.device) -> Dict[str, Any]:
     }
 
 
-# class adapted from: https://medium.com/the-dl/how-to-use-pytorch-hooks-5041d777f904 using an LLM
+# class adapted from: https://medium.com/the-dl/how-to-use-pytorch-hooks-5041d777f904 
 class FeatureExtractor:
     def __init__(self, model: nn.Module, layer_name: str):
         """
