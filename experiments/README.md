@@ -1,8 +1,8 @@
 # Categorization experiments using LlaMa
 This section contains the code for postprocessing and visualizing the result of the categorization experiment. Generated captions from each layer are further processed using [Llama-3.1-70B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct) model to extract visually detectable attributes from each caption. The result of this analysis is summarized in this figure.
 
-![](../framework/SAC_5_percent.png)
-
+![](framework/SAC_5_percent.png)
+  | 
 ## Data
 
 The data folder in this repository contains generated captions per every layer for all samples (5K samples in Karpathy test split) and results of categorization experiments after postprocessing that contains the percentage of each category per every layer. This data is used to generate the plot.
@@ -33,3 +33,7 @@ The language model was prompted to generate responses in a form of a dictionary 
 - About 1.32% of of the generated responses did no followw the dictionary format and not transformable directly (they can be manually processed but during the experimentations, they have been removed.)
 - Even though the LLM was prompted to not explain the given response, there was a single case of generated explanation and hence removed from the analysis.
 - The language model in some cases used the plural or similar word for the category names. For that, all the generated categories were extracted and merged. (e.g. location, locations, places -> location)
+
+### Update: Classification results for LLaVA model fine-tuned on COCO2017
+
+![](framework/SAC_5_percent_llava.png)
